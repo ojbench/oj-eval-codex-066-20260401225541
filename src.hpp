@@ -47,9 +47,9 @@ class any_ptr {
   // 拷贝构造：浅拷贝，共享同一份内存
   any_ptr(const any_ptr &other) : ctrl(other.ctrl) { retain(); }
 
-  // 由裸指针构造：接管生命周期
+  // 由裸指针构造：接管生命周期（允许隐式转换）
   template <class T>
-  explicit any_ptr(T *ptr) : ctrl(nullptr) {
+  any_ptr(T *ptr) : ctrl(nullptr) {
     if (ptr) ctrl = new control_block(new holder<T>(ptr));
   }
 
@@ -117,4 +117,3 @@ any_ptr make_any_ptr(std::initializer_list<typename T::value_type> il) {
 }  // namespace sjtu
 
 #endif
-
